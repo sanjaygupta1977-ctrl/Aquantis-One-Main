@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aquantis API Tester</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            color: #0f172a;
+            border-bottom: 3px solid #38bdf8;
+            padding-bottom: 10px;
+        }
+        .endpoint {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .endpoint h2 {
+            color: #0369a1;
+            margin-top: 0;
+        }
+        .method {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 10px;
+            color: white;
+        }
+        .get { background: #16a34a; }
+        .post { background: #2563eb; }
+        .url {
+            background: #f0f9ff;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 10px 0;
+            border-left: 4px solid #0369a1;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            font-family: monospace;
+            resize: vertical;
+        }
+        .response {
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 4px;
+            border-left: 4px solid #38bdf8;
+            margin-top: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .success { color: #16a34a; }
+        .error { color: #dc2626; }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌊 Aquantis API Tester</h1>
+    <p>Backend running at: <strong>http://localhost:5000</strong></p>
+
+    <!-- Health Check -->
+    <div class="endpoint">
+        <h2><span class="method get">GET</span>Health Check</h2>
+        <div class="url">http://localhost:5000/api/health</div>
+        <button onclick="testHealth()">Test Health</button>
+        <div id="health-response" class="response" style="display:none;"></div>
+    </div>
+
+    <!-- Water Balance -->
+    <div class="endpoint">
+        <h2><span class="method post">POST</span>Save Water Balance</h2>
+        <div class="url">http://localhost:5000/api/water-balance</div>
+        <label>Fresh Water (m³):</label>
+        <input type="number" id="freshwater" value="12000">
+        <label>Recycled Water (m³):</label>
+        <input type="number" id="recycled" value="4000">
+        <label>Production (m³):</label>
+        <input type="number" id="production" value="2500">
+        <button onclick="saveWaterBalance()">Save Water Balance</button>
+        <div id="water-response" class="response" style="display:none;"></div>
+    </div>
+
+    <!-- Get Water Balance -->
+    <div class="endpoint">
+        <h2><span class="method get">GET</span>Get Water Balance</h2>
+        <div class="url">http://localhost:5000/api/water-balance</div>
+        <button onclick="getWaterBalance()">Get All Water Balance Records</button>
+        <div id="get-water-response" class="response" style="display:none;"></div>
+    </div>
+
+    <!-- Water Quality -->
+    <div class="endpoint">
+        <h2><span class="method post">POST</span>Save Water Quality</h2>
+        <div class="url">http://localhost:5000/api/water-quality</div>
+        <label>pH Level:</label>
+        <input type="number" id="ph" value="7.0" step="0.1" min="0" max="14">
+        <label>Turbidity (NTU):</label>
+        <input type="number" id="turbidity" value="0.5" step="0.1" min="0">
+        <label>TDS (mg/L):</label>
+        <input type="number" id="tds" value="500" step="10" min="0">
+        <button onclick="saveWaterQuality()">Save Water Quality</button>
+        <div id="quality-response" class="response" style="display:none;"></div>
+    </div>
+
+    <!-- Cooling Tower -->
+    <div class="endpoint">
+        <h2><span class="method post">POST</span>Save Cooling Tower Data</h2>
+        <div class="url">http://localhost:5000/api/cooling-tower</div>
+        <label>Inlet Temperature (°C):</label>
+        <input type="number" id="inlet-temp" value="42" step="0.5">
+        <label>Outlet Temperature (°C):</label>
+        <input type="number" id="outlet-temp" value="32" step="0.5">
+        <label>Ambient Temperature (°C):</label>
+        <input type="number" id="ambient-temp" value="28" step="0.5">
+        <label>Flow Rate (m³/h):</label>
+        <input type="number" id="flow-rate" value="1000" step="10">
+        <button onclick="saveCoolingTower()">Save Cooling Tower</button>
+        <div id="cooling-response" class="response" style="display:none;"></div>
+    </div>
+
+    <!-- Neutrality -->
+    <div class="endpoint">
+        <h2><span class="method post">POST</span>Save Neutrality Data</h2>
+        <div class="url">http://localhost:5000/api/neutrality</div>
+        <label>Acidity (mmol/L):</label>
+        <input type="number" id="acidity" value="5" step="0.5" min="0">
+        <label>Alkalinity (mmol/L):</label>
+        <input type="number" id="alkalinity" value="8" step="0.5" min="0">
+        <button onclick="saveNeutrality()">Save Neutrality</button>
+        <div id="neutrality-response" class="response" style="display:none;"></div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="endpoint">
+        <h2><span class="method post">POST</span>Save KPI</h2>
+        <div class="url">http://localhost:5000/api/kpis</div>
+        <label>Metric Name:</label>
+        <input type="text" id="metric-name" value="Daily Water Usage">
+        <label>Value:</label>
+        <input type="number" id="kpi-value" value="45320" step="1">
+        <label>Unit:</label>
+        <input type="text" id="kpi-unit" value="m³">
+        <label>Trend:</label>
+        <input type="text" id="kpi-trend" value="+2.3%">
+        <button onclick="saveKPI()">Save KPI</button>
+        <div id="kpi-response" class="response" style="display:none;"></div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+
+        function displayResponse(elementId, data, isError = false) {
+            const el = document.getElementById(elementId);
+            el.style.display = 'block';
+            el.className = `response ${isError ? 'error' : 'success'}`;
+            el.textContent = JSON.stringify(data, null, 2);
+        }
+
+        async function testHealth() {
+            try {
+                const res = await fetch(`${API_URL}/health`);
+                const data = await res.json();
+                displayResponse('health-response', data);
+            } catch (err) {
+                displayResponse('health-response', { error: err.message }, true);
+            }
+        }
+
+        async function getWaterBalance() {
+            try {
+                const res = await fetch(`${API_URL}/water-balance`);
+                const data = await res.json();
+                displayResponse('get-water-response', data);
+            } catch (err) {
+                displayResponse('get-water-response', { error: err.message }, true);
+            }
+        }
+
+        async function saveWaterBalance() {
+            try {
+                const data = {
+                    freshwater: Number(document.getElementById('freshwater').value),
+                    recycledWater: Number(document.getElementById('recycled').value),
+                    rainwater: 500,
+                    production: Number(document.getElementById('production').value),
+                    evaporationLoss: 5000,
+                    blowdownLoss: 1000,
+                    processLoss: 3000,
+                    domesticUse: 500,
+                    discharge: 7000
+                };
+                const res = await fetch(`${API_URL}/water-balance`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                displayResponse('water-response', result);
+            } catch (err) {
+                displayResponse('water-response', { error: err.message }, true);
+            }
+        }
+
+        async function saveWaterQuality() {
+            try {
+                const data = {
+                    ph: Number(document.getElementById('ph').value),
+                    turbidity: Number(document.getElementById('turbidity').value),
+                    tds: Number(document.getElementById('tds').value)
+                };
+                const res = await fetch(`${API_URL}/water-quality`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                displayResponse('quality-response', result);
+            } catch (err) {
+                displayResponse('quality-response', { error: err.message }, true);
+            }
+        }
+
+        async function saveCoolingTower() {
+            try {
+                const data = {
+                    inletTemp: Number(document.getElementById('inlet-temp').value),
+                    outletTemp: Number(document.getElementById('outlet-temp').value),
+                    ambientTemp: Number(document.getElementById('ambient-temp').value),
+                    flowRate: Number(document.getElementById('flow-rate').value)
+                };
+                const res = await fetch(`${API_URL}/cooling-tower`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                displayResponse('cooling-response', result);
+            } catch (err) {
+                displayResponse('cooling-response', { error: err.message }, true);
+            }
+        }
+
+        async function saveNeutrality() {
+            try {
+                const data = {
+                    acidity: Number(document.getElementById('acidity').value),
+                    alkalinity: Number(document.getElementById('alkalinity').value)
+                };
+                const res = await fetch(`${API_URL}/neutrality`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                displayResponse('neutrality-response', result);
+            } catch (err) {
+                displayResponse('neutrality-response', { error: err.message }, true);
+            }
+        }
+
+        async function saveKPI() {
+            try {
+                const data = {
+                    metricName: document.getElementById('metric-name').value,
+                    value: Number(document.getElementById('kpi-value').value),
+                    unit: document.getElementById('kpi-unit').value,
+                    trend: document.getElementById('kpi-trend').value
+                };
+                const res = await fetch(`${API_URL}/kpis`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                displayResponse('kpi-response', result);
+            } catch (err) {
+                displayResponse('kpi-response', { error: err.message }, true);
+            }
+        }
+    </script>
+</body>
+</html>
