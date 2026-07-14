@@ -4,6 +4,7 @@ export default function Sidebar() {
   const navigate = useNavigate();
 
   const buttons = [
+    { label: "🏠 Dashboard", path: "/" },
     { label: "🔗 Integrated Management", path: "/integrated" },
     { label: "🌏 India Climate Scenario", path: "/india-climate" },
     { label: "💧 Aquifer Mapping", path: "/aquifer-mapping" },
@@ -45,6 +46,8 @@ export default function Sidebar() {
           color: "#38bdf8",
           cursor: "pointer",
           transition: "all 0.3s",
+          fontSize: "18px",
+          fontWeight: "800",
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.color = "#7dd3fc";
@@ -58,7 +61,7 @@ export default function Sidebar() {
         AQUANTIS GLOBAL
       </h2>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
         {buttons.map((btn, idx) => (
           <button
             key={idx}
@@ -67,10 +70,10 @@ export default function Sidebar() {
               background: "transparent",
               color: "white",
               border: "1px solid #38bdf8",
-              padding: "12px 16px",
+              padding: "10px 14px",
               borderRadius: "6px",
               cursor: "pointer",
-              fontSize: "14px",
+              fontSize: "12px",
               fontWeight: "500",
               transition: "all 0.3s",
               textAlign: "left",
@@ -78,15 +81,29 @@ export default function Sidebar() {
             onMouseEnter={(e) => {
               e.currentTarget.style.background = "#38bdf8";
               e.currentTarget.style.color = "#0f172a";
+              e.currentTarget.style.fontWeight = "700";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = "transparent";
               e.currentTarget.style.color = "white";
+              e.currentTarget.style.fontWeight = "500";
             }}
           >
             {btn.label}
           </button>
         ))}
+      </div>
+
+      <div style={{ marginTop: "40px", paddingTop: "20px", borderTop: "1px solid #38bdf8" }}>
+        <p style={{ fontSize: "10px", color: "#64748b", margin: "0 0 10px 0", fontWeight: "700", textTransform: "uppercase" }}>
+          Version Info
+        </p>
+        <p style={{ fontSize: "11px", color: "#38bdf8", margin: "0 0 5px 0", fontWeight: "600" }}>
+          AQUANTIS v1.0.0
+        </p>
+        <p style={{ fontSize: "10px", color: "#64748b", margin: "0" }}>
+          20 Pages • Real-time Sync
+        </p>
       </div>
     </div>
   );
