@@ -18,7 +18,7 @@ export default function Header() {
       </div>
 
       <div>
-        👤 Sanjay & Abhilasha Gupta
+        👤 Name of the Company-----------
       </div>
     </div>
   );

@@ -9,6 +9,17 @@ import KPICard from "./pages/KPICard";
 import AIAdvisor from "./pages/AIAdvisor";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
+import WaterFootprintCalculator from "./pages/WaterFootprintCalculator";
+import CarbonFootprintCalculator from "./pages/CarbonFootprintCalculator";
+import DrinkingWaterQualityCalculator from "./pages/DrinkingWaterQualityCalculator";
+import HealthBarometer from "./pages/HealthBarometer";
+import CoolingTowerWaterMgmt from "./pages/CoolingTowerWaterMgmt";
+import IntegratedResourceManagement from "./pages/IntegratedResourceManagement";
+import IndiaClimateScenario from "./pages/IndiaClimateScenario";
+import AquiferMapping from "./pages/AquiferMapping";
+import SWATToolIntegration from "./pages/SWATToolIntegration";
+import WatershedDelineation from "./pages/WatershedDelineation";
+import RCPDatabaseIntegration from "./pages/RCPDatabaseIntegration";
 
 function App() {
   return (
@@ -24,6 +35,17 @@ function App() {
         <Route path="/ai" element={<AIAdvisor />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/settings" element={<Settings />} />
+      <Route path="/footprint" element={<WaterFootprintCalculator />} />
+      <Route path="/carbon" element={<CarbonFootprintCalculator />} />
+      <Route path="/drinking-water" element={<DrinkingWaterQualityCalculator />} />
+      <Route path="/health-barometer" element={<HealthBarometer />} />
+      <Route path="/cooling-tower" element={<CoolingTowerWaterMgmt />} />
+      <Route path="/integrated" element={<IntegratedResourceManagement />} />
+      <Route path="/india-climate" element={<IndiaClimateScenario />} />
+      <Route path="/aquifer-mapping" element={<AquiferMapping />} />
+      <Route path="/swat-tool" element={<SWATToolIntegration />} />
+      <Route path="/watershed-delineation" element={<WatershedDelineation />} />
+      <Route path="/rcp-database" element={<RCPDatabaseIntegration />} />
       </Routes>
     </BrowserRouter>
   );

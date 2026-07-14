@@ -3,17 +3,18 @@ import Header from "./Header";
 
 interface LayoutProps {
   children: React.ReactNode;
+  hideSidebar?: boolean;
 }
 
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children, hideSidebar = false }: LayoutProps) {
   return (
     <>
-      <Sidebar />
+      {!hideSidebar && <Sidebar />}
       <Header />
 
       <div
         style={{
-          marginLeft: "240px",
+          marginLeft: hideSidebar ? "0" : "240px",
           marginTop: "70px",
           padding: "30px",
           background: "#f5f7fb",
