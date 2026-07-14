@@ -11,6 +11,8 @@ export default function Sidebar() {
     { label: "🌊 SWAT Tool Integration", path: "/swat-tool" },
     { label: "🗻 Watershed Delineation", path: "/watershed-delineation" },
     { label: "🌐 RCP Database v2.0.5", path: "/rcp-database" },
+    { label: "🌍 GEC Interventions", path: "/gec-interventions" },
+    { label: "💧 GEC 2015 Groundwater", path: "/gec-2015-groundwater" },
     { label: "🏥 Health Barometer", path: "/health-barometer" },
     { label: "💧 Water", path: "/water" },
     { label: "🧪 Water Quality", path: "/quality" },
@@ -99,10 +101,10 @@ export default function Sidebar() {
           Version Info
         </p>
         <p style={{ fontSize: "11px", color: "#38bdf8", margin: "0 0 5px 0", fontWeight: "600" }}>
-          AQUANTIS v1.0.0
+          AQUANTIS v1.0.2
         </p>
         <p style={{ fontSize: "10px", color: "#64748b", margin: "0" }}>
-          20 Pages • Real-time Sync
+          22 Pages • Real-time Sync
         </p>
       </div>
     </div>

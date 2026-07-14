@@ -20,6 +20,8 @@ import AquiferMapping from "./pages/AquiferMapping";
 import SWATToolIntegration from "./pages/SWATToolIntegration";
 import WatershedDelineation from "./pages/WatershedDelineation";
 import RCPDatabaseIntegration from "./pages/RCPDatabaseIntegration";
+import GECWatershedInterventions from "./pages/GECWatershedInterventions";
+import GEC2015GroundWater from "./pages/GEC2015GroundWater";
 
 function App() {
   return (
@@ -46,6 +48,8 @@ function App() {
       <Route path="/swat-tool" element={<SWATToolIntegration />} />
       <Route path="/watershed-delineation" element={<WatershedDelineation />} />
       <Route path="/rcp-database" element={<RCPDatabaseIntegration />} />
+      <Route path="/gec-interventions" element={<GECWatershedInterventions />} />
+      <Route path="/gec-2015-groundwater" element={<GEC2015GroundWater />} />
       </Routes>
     </BrowserRouter>
   );
