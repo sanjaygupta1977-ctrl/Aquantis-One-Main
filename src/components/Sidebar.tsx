@@ -5,6 +5,7 @@ export default function Sidebar() {
 
   const buttons = [
     { label: "🏠 Dashboard", path: "/" },
+  
     { label: "🔗 Integrated Management", path: "/integrated" },
     { label: "🌏 India Climate Scenario", path: "/india-climate" },
     { label: "💧 Aquifer Mapping", path: "/aquifer-mapping" },
@@ -101,10 +102,10 @@ export default function Sidebar() {
           Version Info
         </p>
         <p style={{ fontSize: "11px", color: "#38bdf8", margin: "0 0 5px 0", fontWeight: "600" }}>
-          AQUANTIS v1.0.2
+          AQUANTIS v1.1.0
         </p>
         <p style={{ fontSize: "10px", color: "#64748b", margin: "0" }}>
-          22 Pages • Real-time Sync
+          23 Pages • 14-Month Roadmap
         </p>
       </div>
     </div>

@@ -50,6 +50,7 @@ function App() {
       <Route path="/rcp-database" element={<RCPDatabaseIntegration />} />
       <Route path="/gec-interventions" element={<GECWatershedInterventions />} />
       <Route path="/gec-2015-groundwater" element={<GEC2015GroundWater />} />
+      
       </Routes>
     </BrowserRouter>
   );
