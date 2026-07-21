@@ -89,6 +89,19 @@ export async function initializeDatabase() {
       );
     `);
 
+    // ZLD Calculator table
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS zld_calculations (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        sector VARCHAR(100) NOT NULL,
+        total_flow_m3_h NUMERIC NOT NULL,
+        input_water_quality JSONB,
+        pinch_analysis JSONB,
+        zld_metrics JSONB,
+        calculation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
     console.log('Database initialized successfully');
   } catch (error) {
     console.error('Database initialization error:', error);

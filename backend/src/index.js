@@ -6,6 +6,8 @@ import waterQualityRoutes from './routes/waterQuality.js';
 import coolingTowerRoutes from './routes/coolingTower.js';
 import neutralityRoutes from './routes/neutrality.js';
 import kpisRoutes from './routes/kpis.js';
+import zldCalculatorRoutes from './routes/zldCalculator.js';
+import cropWaterLULCRoutes from './routes/cropWaterLULC.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -23,6 +25,8 @@ app.use('/api/water-quality', waterQualityRoutes);
 app.use('/api/cooling-tower', coolingTowerRoutes);
 app.use('/api/neutrality', neutralityRoutes);
 app.use('/api/kpis', kpisRoutes);
+app.use('/api/zld-calculator', zldCalculatorRoutes);
+app.use('/api/crop-water', cropWaterLULCRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

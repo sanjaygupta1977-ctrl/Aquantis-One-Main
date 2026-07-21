@@ -10,6 +10,7 @@ import AIAdvisor from "./pages/AIAdvisor";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 import WaterFootprintCalculator from "./pages/WaterFootprintCalculator";
+import ESGReporting from "./pages/ESGReporting";
 import CarbonFootprintCalculator from "./pages/CarbonFootprintCalculator";
 import DrinkingWaterQualityCalculator from "./pages/DrinkingWaterQualityCalculator";
 import HealthBarometer from "./pages/HealthBarometer";
@@ -22,6 +23,9 @@ import WatershedDelineation from "./pages/WatershedDelineation";
 import RCPDatabaseIntegration from "./pages/RCPDatabaseIntegration";
 import GECWatershedInterventions from "./pages/GECWatershedInterventions";
 import GEC2015GroundWater from "./pages/GEC2015GroundWater";
+import ZLDCalculator from "./pages/ZLDCalculator";
+import CropWaterRequirement from "./pages/CropWaterRequirement";
+import LULCAnalysis from "./pages/LULCAnalysis";
 
 function App() {
   return (
@@ -37,6 +41,7 @@ function App() {
         <Route path="/ai" element={<AIAdvisor />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/esg-reporting" element={<ESGReporting />} />
       <Route path="/footprint" element={<WaterFootprintCalculator />} />
       <Route path="/carbon" element={<CarbonFootprintCalculator />} />
       <Route path="/drinking-water" element={<DrinkingWaterQualityCalculator />} />
@@ -50,7 +55,9 @@ function App() {
       <Route path="/rcp-database" element={<RCPDatabaseIntegration />} />
       <Route path="/gec-interventions" element={<GECWatershedInterventions />} />
       <Route path="/gec-2015-groundwater" element={<GEC2015GroundWater />} />
-      
+      <Route path="/zld-calculator" element={<ZLDCalculator />} />
+      <Route path="/crop-water-requirement" element={<CropWaterRequirement />} />
+      <Route path="/lulc-analysis" element={<LULCAnalysis />} />
       </Routes>
     </BrowserRouter>
   );
