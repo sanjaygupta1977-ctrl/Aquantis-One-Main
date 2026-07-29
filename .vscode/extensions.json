@@ -1,0 +1,24 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "ms-vscode.vscode-typescript-next",
+    "ms-azuretools.vscode-docker",
+    "eamodio.gitlens",
+    "chrisdias.vscode-open-in-browser",
+    "ms-python.python",
+    "ms-mssql.mssql",
+    "ms-vscode.makefile-tools",
+    "ms-vscode-remote.remote-containers",
+    "ms-vscode-remote.remote-ssh",
+    "ms-vscode-remote.vscode-remote-extensibility-pack",
+    "humao.rest-client",
+    "Thunder Client",
+    "PKief.material-icon-theme",
+    "zhuangtongfa.material-theme",
+    "wix.vscode-object-explorer",
+    "GitHub.Copilot",
+    "GitHub.Copilot-Chat",
+    "ms-vscode.Live-Server"
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "📦 AQUANTIS-STP-BOQ"
+    }
+  ],
+  "settings": {
+    "python.linting.enabled": true,
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/.git": true,
+      "**/.DS_Store": true
+    },
+    "explorer.decorations.enabled": true,
+    "explorer.sortOrder": "filesFirst",
+    "workbench.sideBar.location": "left",
+    "workbench.tree.indent": 16
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "🚀 Docker: Frontend",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder}/src/main.tsx",
+        "preLaunchTask": "npm: start",
+        "outFiles": [
+          "${workspaceFolder}/dist/**/*.js"
+        ]
+      },
+      {
+        "name": "🔧 Docker: Backend",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder}/backend/src/index.js",
+        "cwd": "${workspaceFolder}/backend",
+        "outFiles": [
+          "${workspaceFolder}/backend/dist/**/*.js"
+        ]
+      }
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "🐳 Docker: Build & Deploy",
+        "type": "shell",
+        "command": "docker-compose",
+        "args": [
+          "up",
+          "-d"
+        ],
+        "cwd": "${workspaceFolder}",
+        "problemMatcher": []
+      },
+      {
+        "label": "⛔ Docker: Stop",
+        "type": "shell",
+        "command": "docker-compose",
+        "args": [
+          "down"
+        ],
+        "cwd": "${workspaceFolder}",
+        "problemMatcher": []
+      },
+      {
+        "label": "🏗️ Frontend: Build",
+        "type": "shell",
+        "command": "npm",
+        "args": [
+          "run",
+          "build"
+        ],
+        "cwd": "${workspaceFolder}",
+        "problemMatcher": []
+      },
+      {
+        "label": "🔄 Backend: Restart",
+        "type": "shell",
+        "command": "docker-compose",
+        "args": [
+          "restart",
+          "aquantis-backend"
+        ],
+        "cwd": "${workspaceFolder}",
+        "problemMatcher": []
+      },
+      {
+        "label": "📊 Backend: View Logs",
+        "type": "shell",
+        "command": "docker",
+        "args": [
+          "logs",
+          "-f",
+          "aquantis-backend"
+        ],
+        "isBackground": true,
+        "problemMatcher": []
+      },
+      {
+        "label": "💾 Database: Connect",
+        "type": "shell",
+        "command": "docker",
+        "args": [
+          "exec",
+          "-it",
+          "aquantis-postgres",
+          "psql",
+          "-U",
+          "aquantis",
+          "-d",
+          "aquantis_db"
+        ],
+        "isBackground": false,
+        "problemMatcher": []
+      }
+    ]
+  },
+  "extensions": {
+    "recommendations": [
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "ms-vscode.vscode-typescript-next",
+      "ms-azuretools.vscode-docker",
+      "eamodio.gitlens",
+      "chrisdias.vscode-open-in-browser",
+      "ms-mssql.mssql",
+      "ms-python.python"
+    ]
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  }
+}

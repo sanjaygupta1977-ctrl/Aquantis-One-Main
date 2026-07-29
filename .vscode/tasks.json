@@ -1,0 +1,197 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "🐳 Docker: Build & Deploy (Compose Up)",
+      "type": "shell",
+      "command": "docker-compose",
+      "args": ["up", "-d"],
+      "cwd": "${workspaceFolder}",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "⛔ Docker: Stop All (Compose Down)",
+      "type": "shell",
+      "command": "docker-compose",
+      "args": ["down"],
+      "cwd": "${workspaceFolder}",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🔄 Docker: Restart All Services",
+      "type": "shell",
+      "command": "docker-compose",
+      "args": ["restart"],
+      "cwd": "${workspaceFolder}",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🔧 Backend: Restart Only",
+      "type": "shell",
+      "command": "docker-compose",
+      "args": ["restart", "aquantis-backend"],
+      "cwd": "${workspaceFolder}",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "📱 Frontend: Restart Only",
+      "type": "shell",
+      "command": "docker-compose",
+      "args": ["restart", "aquantis-frontend"],
+      "cwd": "${workspaceFolder}",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🏗️ Frontend: Build Production",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "build"],
+      "cwd": "${workspaceFolder}",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": ["$eslint-stylish"],
+      "group": "build"
+    },
+    {
+      "label": "📊 Backend: View Logs (Live)",
+      "type": "shell",
+      "command": "docker",
+      "args": ["logs", "-f", "--tail=100", "aquantis-backend"],
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "📊 Frontend: View Logs (Live)",
+      "type": "shell",
+      "command": "docker",
+      "args": ["logs", "-f", "--tail=100", "aquantis-frontend"],
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "💾 Database: Open Shell",
+      "type": "shell",
+      "command": "docker",
+      "args": ["exec", "-it", "aquantis-postgres", "psql", "-U", "aquantis", "-d", "aquantis_db"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "isBackground": false,
+      "problemMatcher": []
+    },
+    {
+      "label": "💾 Database: Backup",
+      "type": "shell",
+      "command": "docker",
+      "args": ["exec", "aquantis-postgres", "pg_dump", "-U", "aquantis", "aquantis_db"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "📊 System: Show Docker Stats",
+      "type": "shell",
+      "command": "docker",
+      "args": ["stats", "--no-stream"],
+      "isBackground": false,
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "📊 System: Show All Containers",
+      "type": "shell",
+      "command": "docker",
+      "args": ["ps", "-a", "--format", "table {{.Names}}\\t{{.Status}}\\t{{.Ports}}"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🧹 System: Clean Docker (Prune)",
+      "type": "shell",
+      "command": "docker",
+      "args": ["system", "prune", "-f"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "📦 NPM: Install Dependencies",
+      "type": "shell",
+      "command": "npm",
+      "args": ["install"],
+      "cwd": "${workspaceFolder}",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "🧪 Frontend: Lint Code",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "lint"],
+      "cwd": "${workspaceFolder}",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": ["$eslint-stylish"]
+    },
+    {
+      "label": "✅ API Health Check",
+      "type": "shell",
+      "command": "curl",
+      "args": ["-i", "http://localhost:5000/api/health"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": [],
+      "isBackground": false
+    }
+  ]
+}

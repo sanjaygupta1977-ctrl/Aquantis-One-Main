@@ -1,0 +1,85 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "🚀 Docker: Build & Deploy All Services",
+      "type": "shell",
+      "request": "launch",
+      "command": "docker-compose",
+      "args": ["up", "-d"],
+      "preLaunchTask": "docker-compose: up",
+      "problemMatcher": []
+    },
+    {
+      "name": "🔧 Backend: Node.js Debugger",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/backend/src/index.js",
+      "cwd": "${workspaceFolder}/backend",
+      "console": "integratedTerminal",
+      "restart": true,
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "outFiles": ["${workspaceFolder}/backend/dist/**/*.js"]
+    },
+    {
+      "name": "📱 Frontend: React Dev Server",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/.bin/vite",
+      "args": ["--host"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"]
+    },
+    {
+      "name": "💾 Database: PostgreSQL Shell",
+      "type": "shell",
+      "request": "launch",
+      "command": "docker",
+      "args": ["exec", "-it", "aquantis-postgres", "psql", "-U", "aquantis", "-d", "aquantis_db"],
+      "problemMatcher": []
+    },
+    {
+      "name": "🐳 Backend: View Live Logs",
+      "type": "shell",
+      "request": "launch",
+      "command": "docker",
+      "args": ["logs", "-f", "aquantis-backend"],
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "name": "🐳 Frontend: View Live Logs",
+      "type": "shell",
+      "request": "launch",
+      "command": "docker",
+      "args": ["logs", "-f", "aquantis-frontend"],
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "name": "📊 All Containers: Status",
+      "type": "shell",
+      "request": "launch",
+      "command": "docker",
+      "args": ["ps", "-a"],
+      "problemMatcher": []
+    }
+  ],
+  "compounds": [
+    {
+      "name": "🎯 Full Stack: All Services",
+      "configurations": [
+        "🚀 Docker: Build & Deploy All Services",
+        "🐳 Backend: View Live Logs",
+        "🐳 Frontend: View Live Logs"
+      ],
+      "stopAll": true
+    }
+  ]
+}
