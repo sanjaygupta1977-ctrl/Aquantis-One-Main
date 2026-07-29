@@ -1,0 +1,155 @@
+.app {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f5f5f5;
+}
+
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+}
+
+.header p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 280px;
+  background: white;
+  border-right: 1px solid #e0e0e0;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.sidebar h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin-bottom: 0.5rem;
+}
+
+.sidebar li button {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e0e0e0;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.sidebar li button:hover {
+  background: #f9f9f9;
+  border-color: #667eea;
+}
+
+.sidebar li.active button {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+.sidebar li button strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.sidebar li button span {
+  display: block;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.sidebar li button small {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+.main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+.chart-section, .anomalies-section {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chart-section h2, .anomalies-section h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.anomaly-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.anomaly-table th {
+  background: #f5f5f5;
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.anomaly-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.anomaly-table tr:hover {
+  background: #f9f9f9;
+}
+
+.anomaly-table .severity-high {
+  background-color: #fff3f0;
+}
+
+.anomaly-table .severity-medium {
+  background-color: #fffbe6;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #999;
+  font-size: 1.1rem;
+}
