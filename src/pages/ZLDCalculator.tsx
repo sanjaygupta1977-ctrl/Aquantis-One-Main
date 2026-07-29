@@ -78,7 +78,7 @@ interface ZLDResult {
   ];
   const annualTreatmentCost = treatmentCosts.reduce((sum, tc) => sum + (tc.flowIn * tc.costPerM3 * 365 * 24), 0);
   
-  const capitalCost = (waterFlowM3h * 150) * 1200000 / 100;
+  const capitalCost = waterFlowM3h * 250000; // ₹250,000 per m³/h capacity (realistic)
   const annualNetSavings = annualFreshWaterSavings - annualTreatmentCost;
   const paybackPeriod = annualNetSavings > 0 ? capitalCost / annualNetSavings : 999;
   

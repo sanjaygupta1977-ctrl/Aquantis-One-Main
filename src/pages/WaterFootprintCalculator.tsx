@@ -1,4 +1,5 @@
 import Layout from "../components/Layout";
+import LinkedFilesSection from "../components/LinkedFilesSection";
 import { useState } from "react";
 
 interface Item {
@@ -59,6 +60,9 @@ export default function WaterFootprintCalculator() {
         <p style={{ color: "#64748b", fontSize: "16px", margin: "0 0 40px 0" }}>
           Calculate the virtual water footprint for each product in your supply chain
         </p>
+
+        {/* Linked Files Section */}
+        <LinkedFilesSection moduleName="Water Footprint" />
 
         {/* Add New Item Form */}
         <div style={{ background: "white", padding: "30px", borderRadius: "16px", boxShadow: "0 1px 3px rgba(0,0,0,0.08)", marginBottom: "40px" }}>

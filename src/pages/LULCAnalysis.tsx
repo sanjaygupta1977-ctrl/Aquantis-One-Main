@@ -1,4 +1,5 @@
 import Layout from "../components/Layout";
+import LinkedFilesSection from "../components/LinkedFilesSection";
 import { useState } from "react";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
@@ -32,6 +33,8 @@ interface LULCAnalysisResult {
 export default function LULCAnalysis() {
   const [lulcClasses] = useState(FALLBACK_LULC_CLASSES);
   const [totalAreaHa, setTotalAreaHa] = useState(1000);
+  const [latitude, setLatitude] = useState(20.5937);
+  const [longitude, setLongitude] = useState(78.9629);
   const [distribution, setDistribution] = useState<Record<string, number>>({
     built_up: 8.5,
     agricultural_kharif: 22,
@@ -44,6 +47,18 @@ export default function LULCAnalysis() {
   });
   const [result, setResult] = useState<LULCAnalysisResult | null>(null);
   const [loading, setLoading] = useState(false);
+  const [linkedWaterDemand, setLinkedWaterDemand] = useState<any[]>([]);
+
+  // Fetch linked water demand data
+  const fetchLinkedData = async (lat: number, lon: number) => {
+    try {
+      const response = await fetch(`${API_BASE}/geo-linking/get-linked/${lat}/${lon}`);
+      const data = await response.json();
+      setLinkedWaterDemand(data || []);
+    } catch (err) {
+      console.error('Error fetching linked data:', err);
+    }
+  };
 
   const handleCalculate = async () => {
     setLoading(true);
@@ -63,6 +78,12 @@ export default function LULCAnalysis() {
 
       const data = await response.json();
       setResult(data);
+
+      // Save LULC with coordinates and trigger geo-linking
+      await saveLULCWithCoordinates(data);
+      
+      // Fetch linked water demand
+      await fetchLinkedData(latitude, longitude);
     } catch (err) {
       console.error(err);
       // Fallback calculation
@@ -91,15 +112,40 @@ export default function LULCAnalysis() {
       const totalWaterDemandML = (totalWaterDemandMLHa * totalAreaHa).toFixed(2);
       const totalWaterDemandM3 = (totalWaterDemandML as any * 1000).toFixed(2);
 
-      setResult({
+      const resultData = {
         totalAreaHectares: totalAreaHa,
         averageWaterDemandMLHa: totalWaterDemandMLHa.toFixed(2),
         totalWaterDemandML,
         totalWaterDemandM3,
         breakdown,
-      });
+      };
+
+      setResult(resultData);
+      
+      // Save and link
+      await saveLULCWithCoordinates(resultData);
+      await fetchLinkedData(latitude, longitude);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const saveLULCWithCoordinates = async (analysisResult: any) => {
+    try {
+      await fetch(`${API_BASE}/geo-linking/save-lulc`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          lulc_id: `LULC-${Date.now()}`,
+          latitude,
+          longitude,
+          distribution,
+          totalAreaHa,
+          result: analysisResult,
+        }),
+      });
+    } catch (err) {
+      console.error('Error saving LULC:', err);
     }
   };
 
@@ -116,8 +162,71 @@ export default function LULCAnalysis() {
           🗺️ LULC Analysis & Water Demand
         </h1>
         <p style={{ color: "#64748b", fontSize: "14px", margin: "0 0 32px 0" }}>
-          Land Use/Land Cover classification with water demand assessment
+          Land Use/Land Cover classification with geographic water demand linking
         </p>
+
+        {/* Linked Files Section */}
+        <LinkedFilesSection moduleName="LULC Analysis" />
+
+        {/* Geographic Input */}
+        <div style={{ background: "linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)", padding: "24px", borderRadius: "14px", boxShadow: "0 1px 4px rgba(0,0,0,0.08)", marginBottom: "28px", border: "2px solid #0284c7" }}>
+          <h3 style={{ color: "#0f172a", fontSize: "16px", fontWeight: "700", margin: "0 0 16px 0" }}>📍 Geographic Coordinates</h3>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px" }}>
+            <div>
+              <label style={{ color: "#0f172a", fontSize: "12px", fontWeight: "700", display: "block", marginBottom: "6px" }}>Latitude</label>
+              <input
+                type="number"
+                value={latitude}
+                onChange={(e) => setLatitude(parseFloat(e.target.value))}
+                step="0.0001"
+                style={{ width: "100%", padding: "10px", border: "2px solid #0284c7", borderRadius: "6px", fontSize: "13px" }}
+                placeholder="e.g., 20.5937"
+              />
+            </div>
+            <div>
+              <label style={{ color: "#0f172a", fontSize: "12px", fontWeight: "700", display: "block", marginBottom: "6px" }}>Longitude</label>
+              <input
+                type="number"
+                value={longitude}
+                onChange={(e) => setLongitude(parseFloat(e.target.value))}
+                step="0.0001"
+                style={{ width: "100%", padding: "10px", border: "2px solid #0284c7", borderRadius: "6px", fontSize: "13px" }}
+                placeholder="e.g., 78.9629"
+              />
+            </div>
+            <div>
+              <p style={{ color: "#0f172a", fontSize: "11px", fontWeight: "700", margin: "0 0 6px 0" }}>Location</p>
+              <p style={{ color: "#0284c7", fontSize: "12px", fontWeight: "700", margin: "0" }}>
+                {latitude.toFixed(4)}°, {longitude.toFixed(4)}°
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Linked Water Demand Data */}
+        {linkedWaterDemand.length > 0 && (
+          <div style={{ background: "white", padding: "24px", borderRadius: "14px", boxShadow: "0 1px 4px rgba(0,0,0,0.08)", marginBottom: "28px", border: "2px solid #10b981" }}>
+            <h3 style={{ color: "#0f172a", fontSize: "16px", fontWeight: "700", margin: "0 0 12px 0" }}>🔗 Linked Water Demand Data ({linkedWaterDemand.length})</h3>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "12px" }}>
+              {linkedWaterDemand.map((item, idx) => (
+                <div key={idx} style={{ background: "linear-gradient(135deg, #dcfce7 0%, #d1fae5 100%)", padding: "16px", borderRadius: "10px", borderLeft: "4px solid #10b981" }}>
+                  <p style={{ color: "#0f172a", fontSize: "12px", fontWeight: "700", margin: "0 0 6px 0" }}>
+                    📊 Water Demand Record {idx + 1}
+                  </p>
+                  <p style={{ color: "#64748b", fontSize: "11px", margin: "0 0 4px 0" }}>
+                    <strong>Distance:</strong> {item.distance_km?.toFixed(2) || 'N/A'} km
+                  </p>
+                  <p style={{ color: "#64748b", fontSize: "11px", margin: "0 0 4px 0" }}>
+                    <strong>Coordinates:</strong> {item.latitude?.toFixed(4)}°, {item.longitude?.toFixed(4)}°
+                  </p>
+                  <p style={{ color: "#10b981", fontSize: "11px", fontWeight: "700", margin: "0" }}>
+                    Status: {item.link_status || 'pending'}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Input */}
         <div style={{ background: "white", padding: "28px", borderRadius: "14px", boxShadow: "0 1px 4px rgba(0,0,0,0.08)", marginBottom: "28px" }}>

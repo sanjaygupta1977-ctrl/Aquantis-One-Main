@@ -5,7 +5,8 @@ const navGroups = [
     group: "CORE",
     items: [
       { label: "🏠 Dashboard",            path: "/" },
-      { label: "🗺️ Product Roadmap",      path: "/product-roadmap" },
+      { label: "🏭 Plant Data Manager",    path: "/plant-data" },
+      { label: "📂 File Upload Manager",    path: "/file-upload" },
       { label: "📑 ESG Reporting",         path: "/esg-reporting" },
       { label: "🔗 Integrated Management", path: "/integrated" },
     ],
@@ -17,6 +18,7 @@ const navGroups = [
       { label: "🌐 RCP Database v2.0.5",    path: "/rcp-database" },
       { label: "💧 Aquifer Mapping",         path: "/aquifer-mapping" },
       { label: "💧 GEC 2015 Groundwater",   path: "/gec-2015-groundwater" },
+      { label: "💧 GEC 2015 Lake Recharge",  path: "/gec-2015-lake-recharge" },
       { label: "🌍 GEC Interventions",      path: "/gec-interventions" },
       { label: "🗻 Watershed Delineation",  path: "/watershed-delineation" },
       { label: "🌊 SWAT Tool Integration",  path: "/swat-tool" },
@@ -28,8 +30,11 @@ const navGroups = [
       { label: "🏥 Health Barometer",     path: "/health-barometer" },
       { label: "💧 Water Intelligence",   path: "/water" },
       { label: "🧪 Water Quality",        path: "/quality" },
+      { label: "🧬 E. coli Analysis",      path: "/ecoli" },
+      { label: "🏞️ Lake Management",       path: "/lake-management" },
       { label: "🏭 Cooling Tower Mgmt",   path: "/cooling-tower" },
       { label: "🌱 Neutrality",           path: "/neutrality" },
+      { label: "💧 Water Neutrality (NITI)", path: "/water-neutrality" },
       { label: "📈 KPI Card",             path: "/kpi" },
       { label: "🤖 AI Advisor",           path: "/ai" },
     ],
@@ -39,10 +44,13 @@ const navGroups = [
     items: [
       { label: "📊 Water Footprint",   path: "/footprint" },
       { label: "🌍 Carbon Footprint",  path: "/carbon" },
+      { label: "🌍 Carbon Methodologies", path: "/carbon-methodologies" },
       { label: "💧 Drinking Water",    path: "/drinking-water" },
       { label: "♻️ ZLD Calculator",     path: "/zld-calculator" },
       { label: "🌾 Crop Water",        path: "/crop-water-requirement" },
       { label: "🗺️ LULC Analysis",      path: "/lulc-analysis" },
+      { label: "💧 ISO 14046 Water Footprint", path: "/iso14046" },
+      { label: "🔬 RO Design Calculator", path: "/ro-design" },
     ],
   },
   {
@@ -135,8 +143,8 @@ export default function Sidebar() {
 
       {/* Footer */}
       <div style={{ padding: "14px 20px", borderTop: "1px solid #1e293b" }}>
-        <p style={{ color: "#38bdf8", fontSize: "11px", fontWeight: "700", margin: "0 0 2px 0" }}>AQUANTIS v1.2.0</p>
-        <p style={{ color: "#334155", fontSize: "10px", margin: "0" }}>27 Modules · ESG Ready</p>
+        <p style={{ color: "#38bdf8", fontSize: "11px", fontWeight: "700", margin: "0 0 2px 0" }}>AQUANTIS v1.4.0</p>
+        <p style={{ color: "#334155", fontSize: "10px", margin: "0" }}>35 Modules · Files Upload · ESG Ready</p>
       </div>
     </div>
   );

@@ -274,7 +274,7 @@ function calculateZLDMetrics(sector, totalWaterFlow, pinchAnalysis) {
   const annualFreshWaterCost = annualFreshWaterNeeded * freshWaterCost;
   const annualFreshWaterSavings = (annualWaterFlow - annualFreshWaterNeeded) * freshWaterCost;
 
-  const capitalCost = (totalWaterFlow * profile.typicalFlowRate) * 1200000 / 100;
+  const capitalCost = totalWaterFlow * 250000; // ₹250,000 per m³/h capacity (realistic for ZLD system)
   const annualNetSavings = annualFreshWaterSavings - totalAnnualTreatmentCost;
   const paybackPeriod = annualNetSavings > 0 ? capitalCost / annualNetSavings : 999;
   const zldAchievementRate = (annualRecycledWater / annualWaterFlow) * 100;
