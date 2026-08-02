@@ -28,6 +28,7 @@ import stpElectricalBOQRouter, { initSTPElectricalBOQTable } from './routes/stpE
 import stpInstrumentationBOQRouter, { initSTPInstrumentationBOQTable } from './routes/stpInstrumentationBOQ.js';
 import stpChemicalBOQRouter, { initSTPChemicalBOQTable } from './routes/stpChemicalBOQ.js';
 import stpMasterLinkingRouter, { initSTPMasterLinkingTable } from './routes/stpMasterLinking.js';
+import cbamCalculatorRouter, { initCBAMAnalysisTable } from './routes/cbamCalculator.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -50,6 +51,7 @@ await initSTPElectricalBOQTable();
 await initSTPInstrumentationBOQTable();
 await initSTPChemicalBOQTable();
 await initSTPMasterLinkingTable();
+await initCBAMAnalysisTable();
 
 // Routes
 app.use('/api/water-balance', waterBalanceRoutes);
@@ -77,6 +79,7 @@ app.use('/api/stp-electrical-boq', stpElectricalBOQRouter);
 app.use('/api/stp-instrumentation-boq', stpInstrumentationBOQRouter);
 app.use('/api/stp-chemical-boq', stpChemicalBOQRouter);
 app.use('/api/stp-master-linking', stpMasterLinkingRouter);
+app.use('/api/cbam', cbamCalculatorRouter);
 
 // Health check
 app.get('/api/health', (req, res) => {

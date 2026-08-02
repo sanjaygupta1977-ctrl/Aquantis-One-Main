@@ -6,49 +6,169 @@
     }
   ],
   "settings": {
-    "python.linting.enabled": true,
-    "typescript.tsdk": "node_modules/typescript/lib",
-    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "workbench.colorTheme": "One Dark Pro",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.sideBar.location": "left",
+    "workbench.tree.indent": 16,
+    "workbench.tree.renderIndentGuides": "always",
+    "explorer.decorations.enabled": true,
+    "explorer.sortOrder": "filesFirst",
+    "explorer.autoReveal": true,
+    "explorer.compactFolders": false,
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "on",
+    "editor.rulers": [80, 120],
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/.git": true,
+      "**/.DS_Store": true,
+      "**/.env.local": true,
+      "**/dist": false,
+      "**/.next": true
+    },
+    "files.watcherExclude": {
+      "**/node_modules": true,
+      "**/.git/objects": true,
+      "**/.git/subtree-cache": true,
+      "**/dist": true,
+      "**/build": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/.git": true
+    },
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "javascript.preferences.quotePreference": "single",
     "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": true
+    },
+    "[typescriptreact]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[javascript]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "files.exclude": {
-      "**/node_modules": true,
-      "**/.git": true,
-      "**/.DS_Store": true
+    "[json]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "explorer.decorations.enabled": true,
-    "explorer.sortOrder": "filesFirst",
-    "workbench.sideBar.location": "left",
-    "workbench.tree.indent": 16
+    "[markdown]": {
+      "editor.wordWrap": "on",
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "prettier.semi": true,
+    "prettier.singleQuote": true,
+    "prettier.trailingComma": "es5",
+    "prettier.printWidth": 100,
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact"
+    ],
+    "eslint.format.enable": true,
+    "docker.showDebugOutput": true,
+    "docker.commands.composeUp": "docker-compose up -d",
+    "docker.commands.composeDown": "docker-compose down",
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "gitlens.views.repositories.files.compact": false,
+    "gitlens.codeLens.enabled": true,
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "terminal.integrated.fontSize": 13,
+    "[sql]": {
+      "editor.defaultFormatter": "ms-mssql.mssql"
+    }
   },
   "launch": {
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "🚀 Docker: Frontend",
-        "type": "node",
+        "name": "🚀 Docker: Build & Deploy All Services",
+        "type": "shell",
         "request": "launch",
-        "program": "${workspaceFolder}/src/main.tsx",
-        "preLaunchTask": "npm: start",
-        "outFiles": [
-          "${workspaceFolder}/dist/**/*.js"
-        ]
+        "command": "docker-compose",
+        "args": ["up", "-d"],
+        "preLaunchTask": "docker-compose: up",
+        "problemMatcher": []
       },
       {
-        "name": "🔧 Docker: Backend",
+        "name": "🔧 Backend: Node.js Debugger",
         "type": "node",
         "request": "launch",
         "program": "${workspaceFolder}/backend/src/index.js",
         "cwd": "${workspaceFolder}/backend",
-        "outFiles": [
-          "${workspaceFolder}/backend/dist/**/*.js"
-        ]
+        "console": "integratedTerminal",
+        "restart": true,
+        "env": {
+          "NODE_ENV": "development"
+        },
+        "outFiles": ["${workspaceFolder}/backend/dist/**/*.js"]
+      },
+      {
+        "name": "📱 Frontend: React Dev Server",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder}/node_modules/.bin/vite",
+        "args": ["--host"],
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "env": {
+          "NODE_ENV": "development"
+        },
+        "outFiles": ["${workspaceFolder}/dist/**/*.js"]
+      },
+      {
+        "name": "💾 Database: PostgreSQL Shell",
+        "type": "shell",
+        "request": "launch",
+        "command": "docker",
+        "args": ["exec", "-it", "aquantis-postgres", "psql", "-U", "aquantis", "-d", "aquantis_db"],
+        "problemMatcher": []
+      },
+      {
+        "name": "🐳 Backend: View Live Logs",
+        "type": "shell",
+        "request": "launch",
+        "command": "docker",
+        "args": ["logs", "-f", "aquantis-backend"],
+        "isBackground": true,
+        "problemMatcher": []
+      },
+      {
+        "name": "🐳 Frontend: View Live Logs",
+        "type": "shell",
+        "request": "launch",
+        "command": "docker",
+        "args": ["logs", "-f", "aquantis-frontend"],
+        "isBackground": true,
+        "problemMatcher": []
+      },
+      {
+        "name": "📊 All Containers: Status",
+        "type": "shell",
+        "request": "launch",
+        "command": "docker",
+        "args": ["ps", "-a"],
+        "problemMatcher": []
+      }
+    ],
+    "compounds": [
+      {
+        "name": "🎯 Full Stack: All Services",
+        "configurations": [
+          "🚀 Docker: Build & Deploy All Services",
+          "🐳 Backend: View Live Logs",
+          "🐳 Frontend: View Live Logs"
+        ],
+        "stopAll": true
       }
     ]
   },
@@ -56,76 +176,196 @@
     "version": "2.0.0",
     "tasks": [
       {
-        "label": "🐳 Docker: Build & Deploy",
+        "label": "🐳 Docker: Build & Deploy (Compose Up)",
         "type": "shell",
         "command": "docker-compose",
-        "args": [
-          "up",
-          "-d"
-        ],
+        "args": ["up", "-d"],
         "cwd": "${workspaceFolder}",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": [],
+        "group": "build"
+      },
+      {
+        "label": "⛔ Docker: Stop All (Compose Down)",
+        "type": "shell",
+        "command": "docker-compose",
+        "args": ["down"],
+        "cwd": "${workspaceFolder}",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
         "problemMatcher": []
       },
       {
-        "label": "⛔ Docker: Stop",
+        "label": "🔄 Docker: Restart All Services",
         "type": "shell",
         "command": "docker-compose",
-        "args": [
-          "down"
-        ],
+        "args": ["restart"],
         "cwd": "${workspaceFolder}",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
         "problemMatcher": []
       },
       {
-        "label": "🏗️ Frontend: Build",
+        "label": "🔧 Backend: Restart Only",
+        "type": "shell",
+        "command": "docker-compose",
+        "args": ["restart", "aquantis-backend"],
+        "cwd": "${workspaceFolder}",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "📱 Frontend: Restart Only",
+        "type": "shell",
+        "command": "docker-compose",
+        "args": ["restart", "aquantis-frontend"],
+        "cwd": "${workspaceFolder}",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "🏗️ Frontend: Build Production",
         "type": "shell",
         "command": "npm",
-        "args": [
-          "run",
-          "build"
-        ],
+        "args": ["run", "build"],
         "cwd": "${workspaceFolder}",
-        "problemMatcher": []
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": ["$eslint-stylish"],
+        "group": "build"
       },
       {
-        "label": "🔄 Backend: Restart",
-        "type": "shell",
-        "command": "docker-compose",
-        "args": [
-          "restart",
-          "aquantis-backend"
-        ],
-        "cwd": "${workspaceFolder}",
-        "problemMatcher": []
-      },
-      {
-        "label": "📊 Backend: View Logs",
+        "label": "📊 Backend: View Logs (Live)",
         "type": "shell",
         "command": "docker",
-        "args": [
-          "logs",
-          "-f",
-          "aquantis-backend"
-        ],
+        "args": ["logs", "-f", "--tail=100", "aquantis-backend"],
         "isBackground": true,
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
         "problemMatcher": []
       },
       {
-        "label": "💾 Database: Connect",
+        "label": "📊 Frontend: View Logs (Live)",
         "type": "shell",
         "command": "docker",
-        "args": [
-          "exec",
-          "-it",
-          "aquantis-postgres",
-          "psql",
-          "-U",
-          "aquantis",
-          "-d",
-          "aquantis_db"
-        ],
+        "args": ["logs", "-f", "--tail=100", "aquantis-frontend"],
+        "isBackground": true,
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "💾 Database: Open Shell",
+        "type": "shell",
+        "command": "docker",
+        "args": ["exec", "-it", "aquantis-postgres", "psql", "-U", "aquantis", "-d", "aquantis_db"],
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
         "isBackground": false,
         "problemMatcher": []
+      },
+      {
+        "label": "💾 Database: Backup",
+        "type": "shell",
+        "command": "docker",
+        "args": ["exec", "aquantis-postgres", "pg_dump", "-U", "aquantis", "aquantis_db"],
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "📊 System: Show Docker Stats",
+        "type": "shell",
+        "command": "docker",
+        "args": ["stats", "--no-stream"],
+        "isBackground": false,
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "📊 System: Show All Containers",
+        "type": "shell",
+        "command": "docker",
+        "args": ["ps", "-a", "--format", "table {{.Names}}\\t{{.Status}}\\t{{.Ports}}"],
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "🧹 System: Clean Docker (Prune)",
+        "type": "shell",
+        "command": "docker",
+        "args": ["system", "prune", "-f"],
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "📦 NPM: Install Dependencies",
+        "type": "shell",
+        "command": "npm",
+        "args": ["install"],
+        "cwd": "${workspaceFolder}",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": [],
+        "group": "build"
+      },
+      {
+        "label": "🧪 Frontend: Lint Code",
+        "type": "shell",
+        "command": "npm",
+        "args": ["run", "lint"],
+        "cwd": "${workspaceFolder}",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": ["$eslint-stylish"]
+      },
+      {
+        "label": "✅ API Health Check",
+        "type": "shell",
+        "command": "curl",
+        "args": ["-i", "http://localhost:5000/api/health"],
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": [],
+        "isBackground": false
       }
     ]
   },
@@ -137,17 +377,19 @@
       "ms-azuretools.vscode-docker",
       "eamodio.gitlens",
       "chrisdias.vscode-open-in-browser",
+      "ms-python.python",
       "ms-mssql.mssql",
-      "ms-python.python"
+      "ms-vscode.makefile-tools",
+      "ms-vscode-remote.remote-containers",
+      "ms-vscode-remote.remote-ssh",
+      "ms-vscode-remote.vscode-remote-extensibility-pack",
+      "humao.rest-client",
+      "PKief.material-icon-theme",
+      "zhuangtongfa.material-theme",
+      "wix.vscode-object-explorer",
+      "GitHub.Copilot",
+      "GitHub.Copilot-Chat",
+      "ms-vscode.Live-Server"
     ]
-  },
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "esbenp.prettier-vscode",
-        "dbaeumer.vscode-eslint",
-        "ms-azuretools.vscode-docker"
-      ]
-    }
   }
 }

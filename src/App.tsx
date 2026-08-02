@@ -38,6 +38,7 @@ import WaterNeutralityIndustry from "./pages/WaterNeutralityIndustry";
 import ThermalPowerPlantWaterQuality from "./pages/ThermalPowerPlantWaterQuality";
 import STPCivilBOQ from "./pages/STPCivilBOQ";
 import STPMechanicalBOQ from "./pages/STPMechanicalBOQ";
+import CBAMCalculator from "./pages/CBAMCalculator";
 
 function App() {
   return (
@@ -82,6 +83,7 @@ function App() {
         <Route path="/ro-design" element={<RODesignCalculator />} />
         <Route path="/stp-civil-boq" element={<STPCivilBOQ />} />
         <Route path="/stp-mechanical-boq" element={<STPMechanicalBOQ />} />
+        <Route path="/cbam-calculator" element={<CBAMCalculator />} />
       </Routes>
     </BrowserRouter>
   );
